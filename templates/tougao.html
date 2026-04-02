@@ -1,0 +1,44 @@
+
+{% set title = '投稿举报' %}
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>投稿举报</title>
+<style>
+body{background:#0e0e10;color:#e6e6e6;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+.container{max-width:640px;margin:24px auto;padding:0 16px}
+.card{background:#17171a;border:1px solid #2a2a2e;border-radius:14px;padding:20px}
+label{display:block;margin-bottom:8px;font-size:14px;color:#bdbdbd}
+input,textarea{width:100%;box-sizing:border-box;border-radius:10px;border:1px solid #3a3a40;background:#121215;color:#fff;padding:12px 14px;font-size:16px;outline:none}
+textarea{min-height:140px;resize:vertical}
+button{border:none;border-radius:12px;padding:12px 16px;font-size:16px}
+.btn{background:#2563eb;color:#fff}
+.msg{margin-top:14px;padding:12px;border-radius:10px}
+.msg.ok{background:#0f5132;color:#d1e7dd}
+.msg.bad{background:#5c2c2c;color:#f8d7da}
+</style>
+</head><body>
+<div class="container">
+  <h2>投稿举报</h2>
+  <div class="card">
+    {% if ok is not none %}
+      {% if ok %}
+        <div class="msg ok">已提交，编号：<b>{{code}}</b>。管理员审核后会处理。</div>
+      {% else %}
+        <div class="msg bad">{{msg}}</div>
+      {% endif %}
+      <div style="height:12px"></div>
+    {% endif %}
+    <form method="post">
+      <label>涉嫌账号（@用户名 或 ID）</label>
+      <input name="account" value="{{account or ''}}" placeholder="@username 或 数字ID">
+      <div style="height:10px"></div>
+      <label>情况描述</label>
+      <textarea name="desc" placeholder="请尽量提供可核验的信息">{{desc or ''}}</textarea>
+      <div style="height:14px"></div>
+      <button class="btn" type="submit">提交</button>
+    </form>
+  </div>
+</div>
+</body></html>

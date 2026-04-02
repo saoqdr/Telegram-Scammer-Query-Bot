@@ -1,0 +1,9 @@
+
+body{background:#0b0b0b;color:#e8e8e8}
+.card{background:#191b1f;border:1px solid #2a2d34}
+.table{--bs-table-bg:transparent;color:#e8e8e8}
+.table-striped>tbody>tr:nth-of-type(odd)>*{--bs-table-accent-bg:rgba(255,255,255,.04)}
+.form-control,.form-select,.btn{border-radius:.6rem}
+pre{white-space:pre-wrap}
+a{color:#7fb7ff}
+.navbar-brand{font-weight:700}

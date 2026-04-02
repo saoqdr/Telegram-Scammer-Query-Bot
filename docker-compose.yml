@@ -1,0 +1,35 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  zpf-web:
+    image: python:${PYTHON_VERSION:-3.10-slim}
+    container_name: ${CONTAINER_NAME:-zpf-web}
+    working_dir: /app
+    command: bash /run.sh
+    environment:
+      - TZ=Asia/Shanghai
+      - APP_PORT=${APP_PORT:-1012}
+      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-http://your-server-ip:PORT}
+      # 下面两个可留空；若你的 webapp 不用就忽略
+      - BOT_TOKEN=${BOT_TOKEN:-}
+      - TOKEN=${TOKEN:-}
+      # 可选：Flask SECRET_KEY，没配的话 run.sh 会自动生成
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-}
+    volumes:
+      # 把你的 webapp 挂进去（这里就是你给的路径）
+      - ${CODE_DIR:-/www/dk_project/dk_app/dk_qinglong/data/scripts}:/app
+      - ./run.sh:/run.sh
+      - ./.env:/.env
+    ports:
+      # 1Panel 的变量写法，等价于 0.0.0.0:1012->1012
+      - ${HOST_IP:-0.0.0.0}:${PANEL_APP_PORT_HTTP:-1012}:${APP_PORT:-1012}
+    restart: unless-stopped
+    networks:
+      - 1panel-network
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:${APP_PORT:-1012}/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 10

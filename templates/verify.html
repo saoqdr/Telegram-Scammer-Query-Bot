@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}验证访问 - 猎诈卫士{% endblock %}
+{% block content %}
+<div class="row justify-content-center fade-up">
+  <div class="col-lg-8 col-xl-7">
+    <div class="card">
+      <div class="card-body p-4 p-lg-5">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <h1 class="h4 mb-0">网页版访问验证</h1>
+          <span class="badge text-bg-secondary">加入频道 + 机器人验证</span>
+        </div>
+
+        <div class="alert alert-warning mt-3 mb-3">
+          为防止滥用，使用网页版完整功能前，需要先加入频道并在机器人完成验证。
+        </div>
+
+        <ol class="list-group list-group-numbered">
+          <li class="list-group-item">
+            先加入频道：
+            <a href="{{ required_channel_url }}" target="_blank" rel="noopener">@{{ required_channel }}</a>
+          </li>
+          <li class="list-group-item">
+            打开机器人完成验证：
+            {% if bot_link %}
+              <a class="btn btn-sm btn-primary ms-2" href="{{ bot_link }}" target="_blank" rel="noopener">打开机器人验证</a>
+            {% else %}
+              <div class="text-danger small mt-1">未获取到机器人用户名，请设置 BOT_USERNAME 或确保 bot_username.txt 可读取。</div>
+            {% endif %}
+          </li>
+          <li class="list-group-item">
+            验证完成后，点击机器人里的“返回网页继续”，系统会自动放行。
+          </li>
+        </ol>
+
+        <div id="verify-status" class="alert alert-info mt-3 mb-0" role="alert">
+          ⏳ 正在等待你完成验证...（加入频道后会自动通过，无需再次 /start）
+        </div>
+
+        <div class="mt-3 small text-muted">
+          验证状态会在本设备浏览器保存一段时间；清理 Cookie 后可能需要重新验证。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const state = "{{ state }}";
+  const el = document.getElementById("verify-status");
+  async function poll(){
+    try{
+      const r = await fetch(`/verify/status?state=${encodeURIComponent(state)}`, {cache:"no-store"});
+      const j = await r.json();
+      if(j.status === "approved" && j.callback_url){
+        el.className = "alert alert-success mt-3 mb-0";
+        el.textContent = "✅ 验证通过，正在跳转...";
+        window.location.href = j.callback_url;
+        return;
+      }
+      if(j.status === "waiting_join"){
+        el.className = "alert alert-warning mt-3 mb-0";
+        el.textContent = "🚫 你还未加入频道。加入后将自动通过验证...";
+      }else if(j.status === "pending"){
+        el.className = "alert alert-info mt-3 mb-0";
+        el.textContent = "ℹ️ 请点击按钮打开机器人进行验证，完成后会自动放行。";
+      }else if(j.status === "expired"){
+        el.className = "alert alert-danger mt-3 mb-0";
+        el.textContent = "⌛ 验证已过期，请刷新页面重新验证。";
+        return;
+      }
+    }catch(e){
+      // ignore
+    }
+    setTimeout(poll, 2000);
+  }
+  setTimeout(poll, 1200);
+})();
+</script>
+{% endblock %}

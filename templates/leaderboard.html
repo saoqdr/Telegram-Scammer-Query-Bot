@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}赞助 - 猎诈卫士{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="h5 mb-3">🏆 赞助</div>
+          {% if not rows %}
+            <div class="text-muted">暂无</div>
+          {% else %}
+            <table class="table table-sm align-middle mb-0">
+              <thead><tr><th>#</th><th>用户</th><th class="text-end">USDT</th></tr></thead>
+              <tbody>
+                {% for row in rows %}
+                  <tr>
+                    <td class="fw-semibold">{{ loop.index }}</td>
+                    <td>{% if row.first_name or row.last_name %}{{ row.first_name }} {{ row.last_name }}{% else %}{{ row.user_id }}{% endif %}</td>
+                    <td class="text-end">{{ "%.2f"|format(row.total_amount_usdt or 0) }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}状态 - 猎诈卫士{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="h5 mb-3">📊 状态</div>
+
+          {% if not has_db %}
+            <div class="alert alert-danger mb-0">缺少 history.db</div>
+          {% else %}
+            <div class="row g-3">
+              <div class="col-6"><div class="stat-card"><div class="stat-label">收录</div><div class="stat-value">{{ stats.total_users or 0 }}</div></div></div>
+              <div class="col-6"><div class="stat-card"><div class="stat-label">在线</div><div class="stat-value">{{ stats.interacted_users or 0 }}</div></div></div>
+              <div class="col-6"><div class="stat-card"><div class="stat-label">消息</div><div class="stat-value">{{ stats.total_messages or 0 }}</div></div></div>
+              <div class="col-6"><div class="stat-card"><div class="stat-label">核实</div><div class="stat-value">{{ stats.verified_count or 0 }}</div></div></div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

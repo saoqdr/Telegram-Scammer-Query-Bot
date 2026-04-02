@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block content %}
+{% if err %}<div class="alert alert-danger">{{ err }}</div>
+{% else %}<div class="alert alert-success">已提交，编号：<b>{{ rid }}</b>。管理员已收到通知。</div>{% endif %}
+<a class="btn btn-primary" href="{{ url_for('webui.index') }}">返回首页</a>{% endblock %}

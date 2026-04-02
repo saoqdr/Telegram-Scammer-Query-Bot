@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}管理登录 - 猎诈卫士{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="h5 mb-3">🔐 管理登录</div>
+          <form method="post">
+            <div class="mb-3">
+              <label class="form-label">密码</label>
+              <input type="password" class="form-control" name="password" placeholder="ADMIN_PASSWORD" required>
+              <div class="form-text">密码来自环境变量 <code>ADMIN_PASSWORD</code></div>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">登录</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ title or '功能已关闭' }} - 猎诈卫士{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="h5 mb-2">🚫 {{ title or '功能已关闭' }}</div>
+          <div class="text-muted">管理员已关闭此功能。</div>
+          <a class="btn btn-primary mt-3" href="{{ url_for('index') }}">返回</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

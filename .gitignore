@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# Local config / secrets
+.env
+.env.*
+!.env.example
+*.session
+*.session-journal
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+*.log
+nohup.out
+history.db
+reports.json
+channels.json
+admin_ids.json
+admins.json
+bot_settings.json
+user_data.json
+user_ids_interactions.json
+processed_tx_ids.json
+processed_txs.json
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

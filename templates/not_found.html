@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}暂无记录 - 猎诈卫士{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="fw-semibold mb-2">暂无记录</div>
+          <div class="small text-muted mb-3"><code>{{ query }}</code></div>
+          <a href="{{ url_for('index') }}" class="btn btn-primary">返回</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
